@@ -1,7 +1,9 @@
 package web
 
 import (
+	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,7 +20,12 @@ func Start() {
 
 	router.GET("/articles/:article_id", getArticle)
 
-	router.Run()
+	portNumber := os.Getenv("PORT")
+
+	if len(portNumber) == 0 {
+		portNumber = "8080"
+	}
+	router.Run(fmt.Sprintf(":%v", portNumber))
 
 }
 
